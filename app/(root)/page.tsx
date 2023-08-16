@@ -1,8 +1,6 @@
 import { auth, currentUser } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
-import Navbar from '@/components/navbar';
-
 export default async function Home() {
   const { userId } = auth();
 
@@ -14,9 +12,5 @@ export default async function Home() {
     redirect('/sign-in');
   }
 
-  return (
-    <>
-      <Navbar />
-    </>
-  );
+  return <h1>Iyot</h1>;
 }

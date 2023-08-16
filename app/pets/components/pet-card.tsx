@@ -15,7 +15,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 
-export type AdoptionType = 'AVAILABLE' | 'PENDING' | 'ADOPTED';
+export type AdoptionType = 'available' | 'pending' | 'adopted';
 interface PetCardProps {
   id: string;
   name: string;

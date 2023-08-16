@@ -2,17 +2,11 @@ import prismadb from '@/lib/prismadb';
 import PetCard, { AdoptionType } from './components/pet-card';
 
 const PetsPage = async () => {
-  const pets = await prismadb.pet.findFirst({
-    where: {
-      species: 'Dog',
-    },
-  });
-
-  console.log(pets);
+  const pets = await prismadb.pet.findMany({});
 
   return (
-    <div className='flex flex-col gap-4 p-4'>
-      {/* {pets.map(pet => (
+    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4'>
+      {pets.map(pet => (
         <PetCard
           id={pet.id}
           key={pet.id}
@@ -20,9 +14,9 @@ const PetsPage = async () => {
           description={pet.description}
           age={pet.age}
           species={pet.species}
-          adoptionStatus={pet.adoptionStatus as AdoptionType}
+          adoptionStatus={pet.adoption_status as AdoptionType}
         />
-      ))} */}
+      ))}
     </div>
   );
 };
