@@ -16,9 +16,6 @@ import { AlignJustify } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 const MainNav = () => {
-  const isMenuOpen = useMenu(state => state.isOpen);
-  const onOpen = useMenu(state => state.onOpen);
-
   const router = useRouter();
   return (
     <div>

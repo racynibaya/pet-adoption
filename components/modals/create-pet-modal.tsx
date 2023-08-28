@@ -55,8 +55,6 @@ const CreatePetModal = () => {
   const router = useRouter();
   const params = useParams();
 
-  const [isMounted, setIsMounted] = useState(false);
-
   // to control the opening and closing of the create pet modal
   const petStore = useCreate();
 
@@ -81,17 +79,16 @@ const CreatePetModal = () => {
     console.log('click');
     console.log(data);
     try {
-      await axios.post(`/api/pet`, data, {
+      await axios.post(`/api/pets`, data, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
-      router.push('/pets');
-      form.reset();
       petStore.onClose();
+      form.reset();
       router.refresh();
       toast.success('Pet is created.');
+      router.push(`/${params.userId}/pets`);
     } catch (error) {
       toast.error('Something went wrong');
     }

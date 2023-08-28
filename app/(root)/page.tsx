@@ -1,10 +1,8 @@
-import { auth, currentUser } from '@clerk/nextjs';
+import { auth } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 export default async function Home() {
   const { userId } = auth();
-
-  const user = await currentUser();
 
   if (!userId) {
     redirect('/sign-in');
@@ -14,5 +12,5 @@ export default async function Home() {
     redirect(`/${userId}/pets`);
   }
 
-  return <div className={`bg-background  h-[calc(100vh-64px)]`}>Home</div>;
+  return null;
 }

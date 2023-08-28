@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import Image from 'next/image';
-import Link from 'next/link';
+
 import { usePathname, useRouter } from 'next/navigation';
 
 export type AdoptionType = 'available' | 'pending' | 'adopted';
