@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { ClerkProvider } from '@clerk/nextjs';
+import { ClerkProvider, auth } from '@clerk/nextjs';
 import ToastProvider from '@/providers/toast-provider';
 import ModalProvider from '@/providers/modal-provider';
 import Navbar from '@/components/navbar';

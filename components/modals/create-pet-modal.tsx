@@ -5,10 +5,10 @@ import axios from 'axios';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import useCreate from '@/hooks/use-create';
 import { toast } from 'react-hot-toast';
 
-import useCreate from '@/hooks/use-create';
 import { Input } from '@/components/ui/input';
 
 import {
@@ -33,6 +33,7 @@ import {
   SelectValue,
 } from '../ui/select';
 import ImageUpload from '../ui/image-upload';
+import { useEffect, useState } from 'react';
 
 const formSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
@@ -52,6 +53,9 @@ type CreateFormValues = z.infer<typeof formSchema>;
 
 const CreatePetModal = () => {
   const router = useRouter();
+  const params = useParams();
+
+  const [isMounted, setIsMounted] = useState(false);
 
   // to control the opening and closing of the create pet modal
   const petStore = useCreate();
@@ -92,6 +96,10 @@ const CreatePetModal = () => {
       toast.error('Something went wrong');
     }
   };
+
+  if (!params.userId) {
+    return null;
+  }
 
   return (
     <Modal

@@ -1,6 +1,7 @@
 'use client';
 
 import CreatePetModal from '@/components/modals/create-pet-modal';
+
 import { useEffect, useState } from 'react';
 
 const ModalProvider = () => {

@@ -6,10 +6,12 @@ export default async function Home() {
 
   const user = await currentUser();
 
-  console.log('[USER]', user);
-
   if (!userId) {
     redirect('/sign-in');
+  }
+
+  if (userId) {
+    redirect(`/${userId}/pets`);
   }
 
   return <div className={`bg-background  h-[calc(100vh-64px)]`}>Home</div>;

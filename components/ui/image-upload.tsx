@@ -22,16 +22,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   const onUpload = (result: any) => {
     console.log(result);
-    onOpenModal();
   };
 
   return (
     <CldUploadWidget onUpload={onUpload} uploadPreset='bacsfqoq'>
       {({ open }) => {
-        const onClick = (e: MouseEvent<HTMLButtonElement>) => {
+        const onClick = (e: any) => {
           e.preventDefault();
           open();
-          onCloseModal();
         };
         return <Button onClick={onClick}>Upload an Image</Button>;
       }}
