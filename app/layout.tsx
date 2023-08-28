@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang='en'>
-        <body className={`${inter.className} h-[200vh]`}>
+        <body className={`${inter.className}`}>
           <Navbar />
           {children}
           <ModalProvider />

@@ -20,40 +20,48 @@ export async function POST(req: Request) {
       description,
     } = body;
 
+    let imageUrl = body.image_url;
+
+    if (!imageUrl) imageUrl = 'test';
+
     if (!userId) {
       return new NextResponse('Unauthenticated', { status: 401 });
     }
+
+    const formattedAge = Number(age);
+    const formattedAdoptionFee = Number(adoption_fee);
+
+    console.log('[LINE 31]', body);
 
     if (
       !name ||
       !species ||
       !breed ||
-      !age ||
+      !formattedAge ||
       !gender ||
       !color ||
       !size ||
       !adoption_status ||
-      !adoption_fee ||
-      !description
+      !formattedAdoptionFee ||
+      !description ||
+      !imageUrl
     ) {
       return new NextResponse('Invalid input', { status: 400 });
     }
-
-    console.log(Number(age));
 
     const pet = await prismadb.pet.create({
       data: {
         name,
         species,
         breed,
-        age: Number(age),
+        age: formattedAge,
         gender,
         color,
         size,
         adoption_status,
-        adoption_fee: Number(adoption_fee),
+        adoption_fee: formattedAdoptionFee,
         description,
-        image_url: 'asdfa',
+        image_url: imageUrl,
       },
     });
 

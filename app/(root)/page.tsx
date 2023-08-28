@@ -12,5 +12,5 @@ export default async function Home() {
     redirect('/sign-in');
   }
 
-  return <h1>Iyot</h1>;
+  return <div className={`bg-background  h-[calc(100vh-64px)]`}>Home</div>;
 }

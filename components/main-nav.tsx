@@ -1,5 +1,7 @@
 'use client';
-import { UserButton } from '@clerk/nextjs';
+
+import { Star, SmilePlus } from 'lucide-react';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,10 +13,13 @@ import {
 
 import { useMenu } from '@/hooks/menu-open';
 import { AlignJustify } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const MainNav = () => {
   const isMenuOpen = useMenu(state => state.isOpen);
   const onOpen = useMenu(state => state.onOpen);
+
+  const router = useRouter();
   return (
     <div>
       <DropdownMenu>
@@ -24,11 +29,20 @@ const MainNav = () => {
         <DropdownMenuContent className='mr-4'>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
+          <DropdownMenuItem
+            className='gap-2 cursor-pointer items-center'
+            onClick={() => router.push('/favorites')}
+          >
+            <Star className='h-4 w-4 text-slate-600' />
+            <span>Favorites</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className='gap-2 cursor-pointer items-center'
+            onClick={() => router.push('/adopt')}
+          >
+            <SmilePlus className='h-4 w-4 text-slate-600' />
+            Adopt now
+          </DropdownMenuItem>
 
           <DropdownMenuItem></DropdownMenuItem>
         </DropdownMenuContent>

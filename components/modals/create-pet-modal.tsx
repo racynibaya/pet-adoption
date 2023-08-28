@@ -32,26 +32,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import ImageUpload from '../ui/image-upload';
 
 const formSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   species: z.string().min(1, { message: 'Species is required' }),
   breed: z.string().min(1, { message: 'Breed is required' }),
-  age: z.coerce.number().gte(0, { message: 'Age should be positive' }),
+  age: z.string(),
   gender: z.string(),
   color: z.string(),
   size: z.string(),
   description: z.string(),
   image_url: z.string().optional(),
   adoption_status: z.string(),
-  adoption_fee: z.coerce.number().positive(),
+  adoption_fee: z.string(),
 });
 
 type CreateFormValues = z.infer<typeof formSchema>;
 
 const CreatePetModal = () => {
   const router = useRouter();
-  const onClose = useCreate(state => state.onClose);
+
+  // to control the opening and closing of the create pet modal
+  const petStore = useCreate();
 
   const form = useForm<CreateFormValues>({
     resolver: zodResolver(formSchema),
@@ -59,13 +62,14 @@ const CreatePetModal = () => {
       name: '',
       species: '',
       breed: '',
-      age: 0,
+      age: '',
       gender: '',
       color: '',
       size: '',
       adoption_status: '',
-      adoption_fee: 0,
+      adoption_fee: '',
       description: '',
+      image_url: '',
     },
   });
 
@@ -79,26 +83,25 @@ const CreatePetModal = () => {
         },
       });
 
-      onClose();
+      router.push('/pets');
       form.reset();
+      petStore.onClose();
       router.refresh();
       toast.success('Pet is created.');
     } catch (error) {
       toast.error('Something went wrong');
     }
   };
-  const petStore = useCreate();
 
   return (
     <Modal
       trigger={
-        <Button
-          variant='outline'
-          className='flex gap-1  rounded-full py-2 px-4 fixed bottom-5 right-10'
-        >
-          <Cat />
-          <Plus className=' absolute top-0 -right-2' />
-        </Button>
+        <div className='flex gap-1 w-8 h-8 rounded-full p-7 bg-red-100 fixed bottom-5 right-5 items-center justify-center shadow-2xl transition duration-500 hover:-translate-y-1'>
+          <span className='relative transition duration-300 text-slate-600 '>
+            <Cat className=' ' />
+            <Plus className='absolute font-bold w-4 h-4 -top-1 z-20 -right-3 ' />
+          </span>
+        </div>
       }
       isOpen={petStore.isOpen}
       onClose={petStore.onClose}
@@ -112,6 +115,23 @@ const CreatePetModal = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className='flex flex-col gap-2'
           >
+            <FormField
+              control={form.control}
+              name='image_url'
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormControl>
+                      <ImageUpload
+                        value={field.value ? field.value : ''}
+                        onChange={url => field.onChange(url)}
+                        onRemove={() => field.onChange('')}
+                      />
+                    </FormControl>
+                  </FormItem>
+                );
+              }}
+            />
             <FormField
               control={form.control}
               name='name'
@@ -254,7 +274,13 @@ const CreatePetModal = () => {
             />
             <div className='flex gap-4 mt-4 justify-end'>
               <Button>Create</Button>
-              <Button variant='outline' onClick={() => form.reset()}>
+              <Button
+                variant='outline'
+                onClick={() => {
+                  form.reset();
+                  petStore.onClose();
+                }}
+              >
                 Cancel
               </Button>
             </div>
