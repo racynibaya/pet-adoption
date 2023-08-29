@@ -1,9 +1,11 @@
 'use client';
-import { UserButton } from '@clerk/nextjs';
-import Logo from './logo';
-import MainNav from './main-nav';
-import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+
+import { UserButton } from '@clerk/nextjs';
+
+import Logo from '@/components/logo';
+import MainNav from '@/components/main-nav';
 
 const Navbar = () => {
   const params = useParams();
